@@ -1,0 +1,129 @@
+{
+  "aviso": "Referências PRELIMINARES extraídas do índice de Resoluções CONTRAN, informadas pela equipe do projeto. Nenhum texto original foi obtido; as relações são HIPÓTESES a confirmar nos atos originais e no DOU.",
+  "itens": [
+    {
+      "tipo": "RESOLUCAO",
+      "orgao_emissor": "CONTRAN",
+      "numero": "1032",
+      "ano": 2026,
+      "relacoes_indice": [
+        {
+          "tipo": "REVOGA",
+          "alvo_tipo": "RESOLUCAO",
+          "numero": "941",
+          "ano": 2022
+        },
+        {
+          "tipo": "REVOGA",
+          "alvo_tipo": "RESOLUCAO",
+          "numero": "977",
+          "ano": 2022
+        }
+      ]
+    },
+    {
+      "tipo": "RESOLUCAO",
+      "orgao_emissor": "CONTRAN",
+      "numero": "1031",
+      "ano": 2026,
+      "relacoes_indice": [
+        {
+          "tipo": "REVOGA",
+          "alvo_tipo": "RESOLUCAO",
+          "numero": "432",
+          "ano": 2013
+        },
+        {
+          "tipo": "ALTERA",
+          "alvo_tipo": "RESOLUCAO",
+          "numero": "985",
+          "ano": 2022,
+          "observacao": "altera o ANEXO; o índice indica regra de vigência diferenciada"
+        }
+      ]
+    },
+    {
+      "tipo": "RESOLUCAO",
+      "orgao_emissor": "CONTRAN",
+      "numero": "1027",
+      "ano": 2026,
+      "relacoes_indice": [
+        {
+          "tipo": "REVOGA",
+          "alvo_tipo": "RESOLUCAO",
+          "numero": "809",
+          "ano": 2020
+        },
+        {
+          "tipo": "REVOGA",
+          "alvo_tipo": "RESOLUCAO",
+          "numero": "817",
+          "ano": 2021
+        },
+        {
+          "tipo": "REVOGA",
+          "alvo_tipo": "RESOLUCAO",
+          "numero": "999",
+          "ano": 2023
+        }
+      ]
+    },
+    {
+      "tipo": "RESOLUCAO",
+      "orgao_emissor": "CONTRAN",
+      "numero": "1026",
+      "ano": 2026,
+      "observacao": "Considerar retificação e Circular nº 2 (não obtidas).",
+      "relacoes_indice": [
+        {
+          "tipo": "REVOGA",
+          "alvo_tipo": "RESOLUCAO",
+          "numero": "797",
+          "ano": 2020
+        },
+        {
+          "tipo": "REVOGA",
+          "alvo_tipo": "RESOLUCAO",
+          "numero": "818",
+          "ano": 2021
+        },
+        {
+          "tipo": "ALTERA",
+          "alvo_tipo": "RESOLUCAO",
+          "numero": "807",
+          "ano": 2020
+        }
+      ]
+    },
+    {
+      "tipo": "RESOLUCAO",
+      "orgao_emissor": "CONTRAN",
+      "numero": "1020",
+      "ano": 2025,
+      "observacao": "Trata de aprendizagem e habilitação e revoga normas anteriores; o índice consultado não detalha quais.",
+      "relacoes_indice": [
+        {
+          "tipo": "REVOGA",
+          "observacao": "revoga normas anteriores — alvos não especificados no índice"
+        }
+      ]
+    },
+    {
+      "tipo": "RESOLUCAO",
+      "orgao_emissor": "CONTRAN",
+      "numero": "1019",
+      "ano": 2025,
+      "relacoes_indice": [
+        {
+          "tipo": "REVOGA",
+          "alvo_tipo": "RESOLUCAO",
+          "numero": "883",
+          "ano": 2021
+        }
+      ],
+      "observacao": "Criação e Regimento Interno das Câmaras Temáticas."
+    }
+  ],
+  "fonte_origem": "resolucoes-contran",
+  "nota_origem": "Página de origem presumida: índice de Resoluções CONTRAN (confirmar qual índice informou cada relação)."
+}

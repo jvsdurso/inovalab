@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SINPIN — Sistema Nacional de Pesquisa e Inteligência Normativa</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="devbar" id="devbar" hidden>
+    Modo desenvolvimento: identidade simulada (login gov.br ainda não integrado). Dados de demonstração são <b>sintéticos</b>.
+  </div>
+  <header class="topo">
+    <div class="marca">
+      <div class="logo">SINPIN</div>
+      <div class="sub">Sistema Nacional de Pesquisa<br>e Inteligência Normativa</div>
+    </div>
+    <nav class="pilares" id="pilares">
+      <button data-v="conhecer" class="ativo"><span class="n">1</span><span><b>CONHECER</b><small>Biblioteca, versões e grafo</small></span></button>
+      <button data-v="compreender"><span class="n">2</span><span><b>COMPREENDER</b><small>Pesquisa fundamentada</small></span></button>
+      <button data-v="produzir"><span class="n">3</span><span><b>PRODUZIR</b><small>Minutas e exportação</small></span></button>
+    </nav>
+    <div class="usuario">
+      <label class="sel">Usuário <select id="usuario"></select></label>
+      <div class="chips"><span class="chip" id="chipOrgao"></span><span class="chip" id="chipIA"></span></div>
+    </div>
+  </header>
+
+  <main>
+    <!-- CONHECER -->
+    <section id="v-conhecer" class="vista">
+      <aside class="lateral">
+        <div class="linha">
+          <input id="filtroDocs" type="search" placeholder="Filtrar por título ou ementa…">
+          <button class="primario" id="btnImportar">Importar</button>
+        </div>
+        <div id="listaDocs" class="lista"></div>
+      </aside>
+      <div class="conteudo">
+        <div class="abas" id="abasConhecer">
+          <button data-a="doc" class="ativo">Documento</button>
+          <button data-a="pend">Relações pendentes <span class="badge" id="nPend">0</span></button>
+          <button data-a="cat">Catálogo do acervo</button>
+          <button data-a="grafo">Grafo normativo</button>
+          <button data-a="aud">Auditoria</button>
+        </div>
+        <div id="a-doc" class="aba"></div>
+        <div id="a-pend" class="aba" hidden></div>
+        <div id="a-cat" class="aba" hidden></div>
+        <div id="a-grafo" class="aba" hidden></div>
+        <div id="a-aud" class="aba" hidden></div>
+      </div>
+    </section>
+
+    <!-- COMPREENDER -->
+    <section id="v-compreender" class="vista" hidden>
+      <div class="coluna">
+        <div class="cartao busca">
+          <textarea id="pergunta" rows="2" placeholder="Pergunte em linguagem natural. Ex.: Qual o prazo para o adquirente requerer a transferência de propriedade do veículo?"></textarea>
+          <div class="linha">
+            <label class="sel">Vigência em <input type="date" id="dataRef"></label>
+            <button class="primario" id="btnPesquisar">Pesquisar</button>
+          </div>
+          <div class="exemplos" id="exemplos"></div>
+        </div>
+        <div id="resultado"></div>
+      </div>
+    </section>
+
+    <!-- PRODUZIR -->
+    <section id="v-produzir" class="vista" hidden>
+      <aside class="lateral">
+        <div class="cartao">
+          <h3>Nova minuta</h3>
+          <label>Tipo<select id="mTipo"></select></label>
+          <label>Assunto<input id="mAssunto" placeholder="Ex.: Prazo para transferência de propriedade"></label>
+          <label>Instruções para a redação<textarea id="mInstr" rows="3" placeholder="O que a minuta deve concluir/recomendar…"></textarea></label>
+          <label>Fatos do caso (só o que for informado aqui será afirmado)<textarea id="mCtx" rows="3" placeholder="Partes, datas, número do processo…"></textarea></label>
+          <label>Vigência em<input type="date" id="mData"></label>
+          <label class="check" id="lblUsarFontes" hidden><input type="checkbox" id="mUsarFontes" checked> Usar as fontes da última pesquisa</label>
+          <button class="primario" id="btnGerar">Gerar minuta</button>
+        </div>
+        <h4 class="tit">Minutas do órgão</h4>
+        <div id="listaMinutas" class="lista"></div>
+      </aside>
+      <div class="conteudo" id="editor"><div class="vazio">Gere ou selecione uma minuta para editar.</div></div>
+    </section>
+  </main>
+
+  <dialog id="dlgImportar">
+    <form method="dialog" id="formImportar" class="dlg">
+      <h3>Importar norma ou documento</h3>
+      <label>Arquivo (TXT, HTML, PDF ou DOCX)<input type="file" name="arquivo" accept=".txt,.md,.html,.htm,.pdf,.docx"></label>
+      <label>…ou cole o texto<textarea name="texto" rows="6" placeholder="RESOLUÇÃO Nº …, DE … DE … DE …&#10;&#10;Art. 1º …"></textarea></label>
+      <label>Escopo<select name="escopo" id="selEscopo">
+        <option value="INSTITUCIONAL_RESTRITO">Institucional restrito (somente o meu órgão)</option>
+        <option value="INSTITUCIONAL_COMPARTILHADO">Institucional compartilhado</option>
+        <option value="NACIONAL">Nacional (curadoria)</option></select></label>
+      <label>Link do documento (URL exata do ato — não use a página de índice)<input name="fonte_url" type="url" placeholder="https://…"></label>
+      <label>Link da página de origem (onde o documento foi localizado)<input name="url_origem" type="url" placeholder="https://…"></label>
+      <label>Link da publicação no DOU<input name="url_publicacao_dou" type="url" placeholder="https://www.in.gov.br/web/dou/…"></label>
+      <label>Data de assinatura<input name="data_assinatura" type="date"></label>
+      <p class="dica">O sistema extrai metadados, estrutura (art., §, incisos, alíneas), vigência e relações com outros atos. Não envie documentos sigilosos em ambiente de desenvolvimento.</p>
+      <div class="linha fim"><button value="cancel" type="button" id="cancelImp">Cancelar</button><button class="primario" type="submit" id="okImp">Importar</button></div>
+      <div id="msgImp"></div>
+    </form>
+  </dialog>
+  <dialog id="dlgHist"><div class="dlg" id="corpoHist"></div></dialog>
+  <div id="toast"></div>
+  <script src="/static/app.js"></script>
+</body>
+</html>

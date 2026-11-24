@@ -1,0 +1,62 @@
+# SINPIN — conjunto mínimo do MVP: PostgreSQL+pgvector, backend FastAPI e frontend Next.js.
+# Uso:  cp .env.example .env   &&   docker compose up --build
+# Interface: http://localhost:3000   ·   API/OpenAPI: http://localhost:8000/docs
+# NÃO foi executado no ambiente de desenvolvimento (sem daemon Docker): se algo falhar, envie o log.
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: sinpin
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-sinpin}
+      POSTGRES_DB: sinpin
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sinpin -d sinpin"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  backend:
+    build: ./backend
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SINPIN_DATABASE_URL: postgresql://sinpin:${POSTGRES_PASSWORD:-sinpin}@db:5432/sinpin
+      SINPIN_SEED_DEMO: ${SINPIN_SEED_DEMO:-1}          # normas SINTÉTICAS de demonstração (use 0 em qualquer uso real)
+      SINPIN_AUTH_MODE: dev                              # identidade por cabeçalho X-Dev-User — SOMENTE desenvolvimento
+      SINPIN_CORS_ORIGINS: http://localhost:3000
+      # IA generativa (opcional). Sem nada: modo extrativo, sem LLM.
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      SINPIN_LLM_PROVIDER: ${SINPIN_LLM_PROVIDER:-}
+      SINPIN_LLM_MODEL: ${SINPIN_LLM_MODEL:-claude-sonnet-5-5}
+      SINPIN_OPENAI_BASE_URL: ${SINPIN_OPENAI_BASE_URL:-}
+      SINPIN_OPENAI_API_KEY: ${SINPIN_OPENAI_API_KEY:-}
+      # Busca vetorial (opcional). Sem provedor: busca apenas lexical.
+      SINPIN_EMBEDDING_BASE_URL: ${SINPIN_EMBEDDING_BASE_URL:-}
+      SINPIN_EMBEDDING_MODEL: ${SINPIN_EMBEDDING_MODEL:-}
+      SINPIN_EMBEDDING_API_KEY: ${SINPIN_EMBEDDING_API_KEY:-}
+      SINPIN_EMBEDDING_DIM: ${SINPIN_EMBEDDING_DIM:-768}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"             # alcança um Ollama rodando na máquina (Linux)
+    volumes:
+      - arquivos:/data/arquivos
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        BACKEND_URL: http://backend:8000
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"
+
+volumes:
+  pgdata:
+  arquivos:
